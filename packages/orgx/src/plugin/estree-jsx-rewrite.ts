@@ -97,10 +97,17 @@ export function estreeJsxRewrite(options: Options) {
               scope.tags.push(name.name)
             }
 
-            element.openingElement.name = {
-              type: 'JSXMemberExpression',
-              object: { type: 'JSXIdentifier', name: '_components' },
-              property: name,
+            if (name.name == 'img') {
+              element.openingElement.name = {
+                type: 'JSXIdentifier',
+                name: 'Image'
+              }
+            } else {
+              element.openingElement.name = {
+                type: 'JSXMemberExpression',
+                object: { type: 'JSXIdentifier', name: '_components' },
+                property: name,
+              }
             }
 
             if (element.closingElement) {
@@ -136,7 +143,7 @@ export function estreeJsxRewrite(options: Options) {
               type: 'Property',
               kind: 'init',
               key: { type: 'Identifier', name },
-              value: { type: 'Literal', value: name },
+              value: { type: 'Literal', value: name == 'img' ? 'Image' : name },
               method: false,
               shorthand: false,
               computed: false,

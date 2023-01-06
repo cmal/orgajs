@@ -91,6 +91,25 @@ export const rehypeEstree: Plugin = (options: Options) => {
     const estree: Program = toEstree(tree, { space, handlers })
     const prepand: typeof estree.body = []
     const { layout, ...rest } = data
+    prepand.push({
+      type: "ImportDeclaration",
+      specifiers: [
+        {
+          type: "ImportDefaultSpecifier",
+          local: {
+            type: "Identifier",
+            name: "Image"
+          }
+        }
+      ],
+      importKind: "value",
+      source: {
+        type: "Literal",
+        value: "next/image",
+        raw: "'next/image'"
+      }
+    })
+  
     if (typeof layout === 'string') {
       prepand.push({
         type: 'ImportDeclaration',
